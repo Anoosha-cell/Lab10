@@ -1,24 +1,27 @@
 pipeline {
     agent any
 
-    // 1️⃣ Parameters
+    // 1️⃣ Add tools here, directly under pipeline
+    tools {
+        maven 'Maven' // This must match the name of Maven installation in Jenkins
+    }
+
     parameters {
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Run Test stage?')
         booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy code?')
     }
-    environment {
-    VERSION = '1.0.0'
-}
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building...'
+                // For Windows use bat, for Linux/Mac use sh
+                bat 'mvn -version' // Verify Maven
+                // bat 'mvn clean install'  <-- actual build command
             }
         }
 
         stage('Test') {
-            // 2️⃣ Conditional execution
             when {
                 expression { params.executeTests == true }
             }
@@ -26,19 +29,13 @@ pipeline {
                 echo 'Testing...'
             }
         }
-        tools {
-    maven 'Maven'
-}
-
 
         stage('Deploy') {
             when {
-                expression { params.deploy == true } // Only deploy if parameter is true
+                expression { params.deploy == true }
             }
             steps {
                 echo 'Deploying application...'
-                // Replace with actual deployment commands, e.g.:
-                // sh 'scp -r ./build user@server:/var/www/app'
             }
         }
     }
