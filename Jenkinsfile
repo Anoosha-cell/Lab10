@@ -6,6 +6,9 @@ pipeline {
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Run Test stage?')
         booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy code?')
     }
+    environment {
+    VERSION = '1.0.0'
+}
 
     stages {
         stage('Build') {
