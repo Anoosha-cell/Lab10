@@ -3,7 +3,7 @@ pipeline {
 
     // 1️⃣ Add tools here, directly under pipeline
     tools {
-        maven 'Maven' // This must match the name of Maven installation in Jenkins
+        maven 'Maven3' // This must match the name of Maven installation in Jenkins
     }
 
     parameters {
