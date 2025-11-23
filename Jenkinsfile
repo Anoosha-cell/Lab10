@@ -21,3 +21,6 @@ pipeline {
         }
     }
 }
+parameters {
+    booleanParam(name: 'executeTests', defaultValue: true)
+}
