@@ -26,6 +26,10 @@ pipeline {
                 echo 'Testing...'
             }
         }
+        tools {
+    maven 'Maven'
+}
+
 
         stage('Deploy') {
             when {
