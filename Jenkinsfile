@@ -8,12 +8,15 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-            }
-        }
+       stage('Test') {
+    when {
+        expression { params.executeTests == true }
     }
+    steps {
+        echo 'Testing..'
+    }
+}
+
 
     post {
         always {
