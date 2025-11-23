@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    // 1️⃣ Add Parameters before stages
     parameters {
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Run Test stage?')
+        booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy code?')
     }
 
     stages {
@@ -14,7 +14,6 @@ pipeline {
         }
 
         stage('Test') {
-            // 2️⃣ Conditional execution based on parameter
             when {
                 expression { params.executeTests == true }
             }
@@ -22,9 +21,19 @@ pipeline {
                 echo 'Testing...'
             }
         }
+
+        stage('Deploy') {
+            when {
+                expression { params.deploy == true } // Only deploy if parameter is true
+            }
+            steps {
+                echo 'Deploying application...'
+                // Example deployment command:
+                // sh 'scp -r ./build user@server:/var/www/app'
+            }
+        }
     }
 
-    // 3️⃣ Post block
     post {
         always {
             echo 'Pipeline Completed'
